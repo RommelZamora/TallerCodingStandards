@@ -21,25 +21,24 @@ class passagner:
             return 0.1
         elif self.num <= 10:
             return 0.2
-        #TODO: add more discount levels if needed
         else:
             return 0.0
 
 class Plane:
     def __init__(self, dist, num, dur):
         self.myclass = myclass()
-        self.passanger = passanger(num)
+        self.passanger = passagner(num)
         self.total_time = total_time(dur)
         self.dist = dist
         self.seats = 200
 
     def sum(self):
-        if not self.myclass.validThis(self.dist) or not self.passanger.validNumber() or not self.total_time.is_valid_total_time():
+        if not self.myclass.valid_this(self.dist) or not self.passanger.valid_number() or not self.total_time.is_valid_total_time():
             return -1
 
         number_total = self.costBas
-        number_total += self.myclass.get_extraCost(self.dist)
-        number_total += self.total_time.getFee()
+        number_total += self.myclass.get_extra_cost(self.dist)
+        number_total += self.total_time.get_fee()
         number_total -= self.total_time.get_the_best_promo_ever()
 
         discount = self.passanger.forHereDiscount()
@@ -52,7 +51,7 @@ class total_time:
         self.dur = dur
 
     def is_valid_total_time(self):
-        return type(dur)==int and self.dur > 0
+        return type(self.dur).isinstance(int) and self.dur > 0
 
     def get_fee(self):
         return 200 if self.dur < 7 else 0
@@ -63,30 +62,30 @@ class total_time:
     def get_weekend(self):
         return 100 if self.dur > 7 else 0
 
-class Vacation_:
-    costBas = 1000
+class vacation_:
+    cost_bas = 1000
 
     def __init__(self, dist, num, dur):
         self.myclass = myclass()
         self.passagner = passagner(num)
-        self.total_TIME = total_time(dur)
+        self.total_time = total_time(dur)
         self.dist = dist
 
     def sum(self):
         #sum the cost of the vacation package here
-        if not self.myclass.validThis(self.dist) or not self.passagner.validNumber() or not self.total_TIME.is_valid_total_time():
+        if not self.myclass.valid_this(self.dist) or not self.passagner.valid_number() or not self.total_time.is_valid_total_time():
             return -1
         
         #sum the total cost
-        numberTotal = self.costBas
-        numberTotal += self.myclass.get_extraCost(self.dist)
-        numberTotal += self.total_TIME.getFee()
-        numberTotal -= self.total_TIME.get_the_best_promo_ever()
+        number_total = self.costBas
+        number_total += self.myclass.get_extraCost(self.dist)
+        number_total += self.total_time.getFee()
+        number_total -= self.total_time.get_the_best_promo_ever()
 
         discount = self.passagner.forHereDiscount()
-        numberTotal = numberTotal - (numberTotal * discount)
+        number_total = number_total - (number_total * discount)
         
-        return max(int(numberTotal), 0)
+        return max(int(number_total), 0)
 
 #this is main function
 def main():
@@ -94,10 +93,9 @@ def main():
     dist = "Paris"
     num = 5
     dur = 10
-    seats = 400
 
     #this are the outputs
-    calculator = Vacation_(dist, num, dur)
+    calculator = vacation_(dist, num, dur)
     cost = calculator.sum()
 
     #this will do some printing
